@@ -32,28 +32,25 @@ except ImportError:
     print("WARNING: xgboost not installed — falling back to sklearn GradientBoostingClassifier.")
 
 #  CONFIGURATION
-# Band names must match GEE export order exactly (see Export_All_Feature_Stacks_2024.js)
+# Band names must match GEE export order exactly
 
 BAND_NAMES_L9_SR = [
     'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'SR_B7',
     'NDVI', 'EVI', 'NDWI', 'NDBI', 'MVI', 'SAVI', 'LSWI',
     'contrast', 'homogeneity', 'entropy',
-    'elevation', 'slope',
-]  # 18 bands
+]  # 16 bands
 
 BAND_NAMES_L9_TOA = [
     'B2', 'B3', 'B4', 'B5', 'B6', 'B7',
     'NDVI', 'EVI', 'NDWI', 'NDBI', 'MVI', 'SAVI', 'LSWI',
     'contrast', 'homogeneity', 'entropy',
-    'elevation', 'slope',
-]  # 18 bands
+]  # 16 bands
 
 BAND_NAMES_S2 = [
     'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B11', 'B12',
     'NDVI', 'EVI', 'NDWI', 'NDBI', 'MVI', 'SAVI', 'LSWI',
     'contrast', 'homogeneity', 'entropy',
-    'elevation', 'slope',
-]  # 22 bands
+]  # 20 bands
 
 CLASS_NAMES = {
     1: 'BuiltUp Bareland',
@@ -149,7 +146,6 @@ def get_classifiers(seed):
                 learning_rate=0.1,
                 subsample=0.8,
                 colsample_bytree=0.8,
-                use_label_encoder=False,
                 eval_metric='mlogloss',
                 random_state=seed,
                 n_jobs=-1,
@@ -185,10 +181,10 @@ def load_feature_stack(path):
 
     n_bands = data.shape[0]
 
-    if n_bands == 22:
+    if n_bands == 20:
         BAND_NAMES = BAND_NAMES_S2
         print(f'  Detected Sentinel-2 stack ({n_bands} bands)')
-    elif n_bands == 18:
+    elif n_bands == 16:
         if 'SR' in str(path).upper():
             BAND_NAMES = BAND_NAMES_L9_SR
             print(f'  Detected Landsat 9 SR stack ({n_bands} bands)')
@@ -198,7 +194,7 @@ def load_feature_stack(path):
     else:
         BAND_NAMES = [f'Band_{i+1}' for i in range(n_bands)]
         print(f'  WARNING: unexpected band count ({n_bands}) — using generic names')
-        print(f'  Expected 22 (S2) or 18 (L9). Check your GEE export.')
+        print(f'  Expected 20 (S2) or 16 (L9). Check your GEE export.')
 
     print(f'  Shape: {data.shape} ({n_bands} bands, {data.shape[1]} rows, {data.shape[2]} cols)')
     return data, profile, transform, crs
