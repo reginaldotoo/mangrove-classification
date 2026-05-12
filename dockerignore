@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+.git
+.DS_Store
+*.tif
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+output/
