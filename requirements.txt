@@ -1,7 +1,0 @@
-numpy
-geopandas
-rasterio
-scipy
-scikit-learn
-matplotlib
-xgboost
