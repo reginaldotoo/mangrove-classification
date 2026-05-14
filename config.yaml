@@ -1,0 +1,49 @@
+# Mangrove Classification Pipeline Configuration
+# Usage: python Script.py --config config.yaml
+
+data:
+  training_polygons: /data/Training/Training 2024.shp
+  max_pixels_per_polygon: 50
+  test_size: 0.2
+
+runs:
+  - name: L9_SR
+    feature_stack: /data/Images/L9_SR_Feature_Stack_2024.tif
+    output_dir: /data/output/L9_SR_2024
+  - name: L9_TOA
+    feature_stack: /data/Images/L9_TOA_Feature_Stack_2024.tif
+    output_dir: /data/output/L9_TOA_2024
+  - name: S2_SR
+    feature_stack: /data/Images/S2_SR_Feature_Stack_2024.tif
+    output_dir: /data/output/S2_SR_2024
+  - name: S2_TOA
+    feature_stack: /data/Images/S2_TOA_Feature_Stack_2024.tif
+    output_dir: /data/output/S2_TOA_2024
+
+classifiers:
+  n_estimators: 200
+  seed: 42
+  rf:
+    class_weight: balanced
+    n_jobs: -1
+  svm:
+    kernel: rbf
+    C: 10
+    gamma: scale
+    class_weight: balanced
+    cache_size: 1000
+  xgb:
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+
+postprocessing:
+  min_connected: 4
+  focal_size: 3
+
+wandb:
+  enabled: true
+  project: mangrove-classification
+  entity: null  # set to your W&B username
+  tags: [mangrove, sentinel2, landsat9, greater-accra]
