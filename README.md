@@ -72,16 +72,6 @@ wandb login
 python Script.py --config config.yaml
 ```
 
-## Results
-
-| Dataset | Classifier | OA | Kappa | Mangrove F1 |
-|---------|-----------|------|-------|-------------|
-| S2_SR   | RF        | —    | —     | —           |
-| S2_SR   | SVM       | —    | —     | —           |
-| S2_SR   | XGB       | —    | —     | —           |
-| L9_SR   | RF        | —    | —     | —           |
-
-*Fill in after running. Metrics are saved to JSON reports and logged to W&B automatically.*
 
 ## Classes
 
@@ -92,7 +82,6 @@ python Script.py --config config.yaml
 | 3  | Water | Blue |
 | 4  | Mangroves | Red |
 
-## Files
 
 | File | Description |
 |------|-------------|
@@ -103,6 +92,4 @@ python Script.py --config config.yaml
 | `Dockerfile` | Containerized execution |
 | `.github/workflows/` | CI for build verification |
 
-## License
 
-MIT
